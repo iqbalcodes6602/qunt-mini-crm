@@ -2,20 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
+use App\Models\Account;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
     // set index page view
-    public function index()
+    public function register()
     {
-        return view('index');
+        return view('register');
     }
 
     // handle fetch all eamployees ajax request
     public function fetchAll()
     {
-        $emps = Employee::all();
+        $emps = Account::all();
         $output = '';
         if ($emps->count() > 0) {
             $output .= '<table class="table table-striped table-sm text-center align-middle">
@@ -53,33 +56,69 @@ class AuthController extends Controller
         }
     }
 
-    // handle insert a new employee ajax request
-    public function store(Request $request)
+    // handle insert a new Account ajax request
+    // public function add_account(Request $request)
+    // {
+    //     $file = $request->file('logo');
+    //     $fileName = time() . '.' . $file->getClientOriginalExtension();
+    //     $file->storeAs('public/images', $fileName);
+
+    //     $accData = [
+    //         'name' => $request->name,
+    //         'email' => $request->email,
+    //         // 'password' => $request->password,
+    //         'password' => Hash::make($request->password),
+    //         'website' => $request->website,
+    //         'logo' => $fileName
+    //     ];
+    //     Account::create($accData);
+    //     return response()->json([
+    //         'status' => 200,
+    //     ]);
+    // }
+    public function add_account(Request $request)
     {
-        $file = $request->file('avatar');
+        $file = $request->file('logo');
         $fileName = time() . '.' . $file->getClientOriginalExtension();
         $file->storeAs('public/images', $fileName);
 
-        $empData = ['first_name' => $request->fname, 'last_name' => $request->lname, 'email' => $request->email, 'phone' => $request->phone, 'post' => $request->post, 'avatar' => $fileName];
-        Employee::create($empData);
-        return response()->json([
-            'status' => 200,
-        ]);
+        $accData = [
+            'name' => $request->name,
+            'password' => Hash::make($request->password),
+            'website' => $request->website,
+            'logo' => $fileName
+        ];
+
+        $account = Account::firstOrCreate(['email' => $request->email], $accData);
+
+        if ($account->wasRecentlyCreated) {
+            // Account was created
+            return response()->json([
+                'status' => 200,
+                'message' => 'Account created successfully.',
+            ]);
+        } else {
+            // Account already exists
+            return response()->json([
+                'status' => 409,
+                'message' => 'Account with the given email already exists.',
+            ]);
+        }
     }
 
-    // handle edit an employee ajax request
+    // handle edit an Account ajax request
     public function edit(Request $request)
     {
         $id = $request->id;
-        $emp = Employee::find($id);
+        $emp = Account::find($id);
         return response()->json($emp);
     }
 
-    // handle update an employee ajax request
+    // handle update an Account ajax request
     public function update(Request $request)
     {
         $fileName = '';
-        $emp = Employee::find($request->emp_id);
+        $emp = Account::find($request->emp_id);
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
@@ -99,13 +138,13 @@ class AuthController extends Controller
         ]);
     }
 
-    // handle delete an employee ajax request
+    // handle delete an Account ajax request
     public function delete(Request $request)
     {
         $id = $request->id;
-        $emp = Employee::find($id);
+        $emp = Account::find($id);
         if (Storage::delete('public/images/' . $emp->avatar)) {
-            Employee::destroy($id);
+            Account::destroy($id);
         }
     }
 }
