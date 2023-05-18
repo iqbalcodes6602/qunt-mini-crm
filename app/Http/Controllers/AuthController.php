@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -78,30 +79,21 @@ class AuthController extends Controller
     // }
     public function add_account(Request $request)
     {
-        $file = $request->file('logo');
-        $fileName = time() . '.' . $file->getClientOriginalExtension();
-        $file->storeAs('public/images', $fileName);
+        $credentials = $request->only('email', 'password');
 
-        $accData = [
-            'name' => $request->name,
-            'password' => Hash::make($request->password),
-            'website' => $request->website,
-            'logo' => $fileName
-        ];
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $token = $user->createToken('AuthToken')->accessToken;
 
-        $account = Account::firstOrCreate(['email' => $request->email], $accData);
-
-        if ($account->wasRecentlyCreated) {
-            // Account was created
             return response()->json([
                 'status' => 200,
-                'message' => 'Account created successfully.',
+                'message' => 'Login successful.',
+                'access_token' => $token,
             ]);
         } else {
-            // Account already exists
             return response()->json([
-                'status' => 409,
-                'message' => 'Account with the given email already exists.',
+                'status' => 401,
+                'message' => 'Invalid credentials.',
             ]);
         }
     }
@@ -115,7 +107,7 @@ class AuthController extends Controller
     }
 
     // handle update an Account ajax request
-    public function update(Request $request)
+    public function login_account(Request $request)
     {
         $fileName = '';
         $emp = Account::find($request->emp_id);
