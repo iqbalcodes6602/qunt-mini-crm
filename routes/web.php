@@ -14,12 +14,6 @@ Route::post('/update', [EmployeeController::class, 'update'])->name('update');
 
 
 
-Route::get('/auth', [AuthController::class, 'register']);
-Route::post('/add_account', [AuthController::class, 'add_account'])->name('add_account');
-Route::post('/login_account', [AuthController::class, 'login_account'])->name('login_account');
-
-
-
 
 Route::get('dashboard', [CustomAuthController::class, 'dashboard']); 
 Route::get('login', [CustomAuthController::class, 'index'])->name('login');
