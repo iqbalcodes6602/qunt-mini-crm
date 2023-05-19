@@ -44,8 +44,8 @@
                         <input type="tel" name="phone" class="form-control" placeholder="Phone" required>
                     </div>
                     <div class="my-2">
-                        <label for="post">Post</label>
-                        <input type="text" name="post" class="form-control" placeholder="Post" required>
+                        <label for="company">company</label>
+                        <input type="text" name="company" class="form-control" placeholder="company" required>
                     </div>
                     <div class="my-2">
                         <label for="avatar">Select Avatar</label>
@@ -94,8 +94,8 @@
                         <input type="tel" name="phone" id="phone" class="form-control" placeholder="Phone" required>
                     </div>
                     <div class="my-2">
-                        <label for="post">Post</label>
-                        <input type="text" name="post" id="post" class="form-control" placeholder="Post" required>
+                        <label for="company">company</label>
+                        <input type="text" name="company" id="company" class="form-control" placeholder="company" required>
                     </div>
                     <div class="my-2">
                         <label for="avatar">Select Avatar</label>
@@ -118,24 +118,15 @@
 <body>
     <nav class="navbar navbar-light navbar-expand-lg mb-5" style="background-color: #e3f2fd;">
         <div class="container">
-            <a class="navbar-brand mr-auto" href="#">PositronX</a>
+            <a class="navbar-brand mr-auto" href="#">Mini-CRM</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register-user') }}">Register</a>
-                    </li>
-                    @else
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('signout') }}">Logout</a>
                     </li>
-                    @endguest
                 </ul>
             </div>
         </div>
@@ -212,7 +203,7 @@
                     $("#lname").val(response.last_name);
                     $("#email").val(response.email);
                     $("#phone").val(response.phone);
-                    $("#post").val(response.post);
+                    $("#company").val(response.company);
                     $("#avatar").html(
                         `<img src="storage/images/${response.avatar}" width="100" class="img-fluid img-thumbnail">`);
                     $("#emp_id").val(response.id);
