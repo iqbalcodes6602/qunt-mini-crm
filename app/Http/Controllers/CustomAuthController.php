@@ -62,15 +62,12 @@ class CustomAuthController extends Controller
     public function dashboard()
     {
         if (Auth::check()) {
-            if (Auth::user()->id === 1) {
-                return view('admin_dashboard');
-            } else {
-                return view('dashboard');
-            }
+            return view('dashboard');
         }
 
         return redirect("login")->withSuccess('You are not allowed to access');
     }
+
     public function signOut()
     {
         Session::flush();
