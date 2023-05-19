@@ -43,7 +43,7 @@ class CompanyController extends Controller
                 <td>' . $comp->website . '</td>
                 <td>' . $comp->city . '</td>
                 <td>
-                  <a href="#" id="' . $comp->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
+                  <a href="#" id="' . $comp->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editCompanyModal"><i class="bi-pencil-square h4"></i></a>
 
                   <a href="#" id="' . $comp->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
                 </td>
@@ -66,8 +66,8 @@ class CompanyController extends Controller
         $compData = [
             'name' => $request->name,
             'email' => $request->email,
-            'website' => $request->phone,
-            'city' => $request->company,
+            'website' => $request->website,
+            'city' => $request->city,
             'logo' => $fileName
         ];
         Company::create($compData);
@@ -88,7 +88,7 @@ class CompanyController extends Controller
     public function update(Request $request)
     {
         $fileName = '';
-        $comp = Company::find($request->emp_id);
+        $comp = Company::find($request->comp_id);
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
@@ -97,14 +97,14 @@ class CompanyController extends Controller
                 Storage::delete('public/images/' . $comp->logo);
             }
         } else {
-            $fileName = $request->emp_logo;
+            $fileName = $request->comp_logo;
         }
 
         $compData = [
             'name' => $request->name,
             'email' => $request->email,
-            'website' => $request->phone,
-            'city' => $request->company,
+            'website' => $request->website,
+            'city' => $request->city,
             'logo' => $fileName
         ];
 
