@@ -43,6 +43,39 @@
                                     <span class="text-danger">{{ $errors->first('password') }}</span>
                                     @endif
                                 </div>
+
+
+
+
+                                <!-- <>
+                                    <div class="form-group mb-3">
+                                        <input type="text" placeholder="Card Number" id="card_number" class="form-control" name="card_number" required>
+                                        @if ($errors->has('card_number'))
+                                        <span class="text-danger">{{ $errors->first('card_number') }}</span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="text" placeholder="Expiry Month" id="expiry_month" class="form-control" name="expiry_month" required>
+                                        @if ($errors->has('expiry_month'))
+                                        <span class="text-danger">{{ $errors->first('expiry_month') }}</span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="text" placeholder="Expiry Year" id="expiry_year" class="form-control" name="expiry_year" required>
+                                        @if ($errors->has('expiry_year'))
+                                        <span class="text-danger">{{ $errors->first('expiry_year') }}</span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="text" placeholder="CVV" id="cvv" class="form-control" name="cvv" required>
+                                        @if ($errors->has('cvv'))
+                                        <span class="text-danger">{{ $errors->first('cvv') }}</span>
+                                        @endif
+                                    </div>
+                                </> -->
+
+
+
                                 <div class="form-group mb-3">
                                     <div class="checkbox">
                                         <label><input type="checkbox" name="remember"> Remember Me</label>
