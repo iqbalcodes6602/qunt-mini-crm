@@ -28,7 +28,7 @@ class EmployeeController extends Controller
                 <th>Avatar</th>
                 <th>Name</th>
                 <th>E-mail</th>
-                <th>Post</th>
+                <th>Company</th>
                 <th>Phone</th>
                 <th>Action</th>
               </tr>
@@ -40,7 +40,7 @@ class EmployeeController extends Controller
                 <td><img src="storage/images/' . $emp->avatar . '" width="50" class="img-thumbnail rounded-circle"></td>
                 <td>' . $emp->first_name . ' ' . $emp->last_name . '</td>
                 <td>' . $emp->email . '</td>
-                <td>' . $emp->post . '</td>
+                <td>' . $emp->company . '</td>
                 <td>' . $emp->phone . '</td>
                 <td>
                   <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
@@ -68,7 +68,7 @@ class EmployeeController extends Controller
             'last_name' => $request->lname,
             'email' => $request->email,
             'phone' => $request->phone,
-            'post' => $request->post,
+            'company' => $request->company,
             'avatar' => $fileName
         ];
         Employee::create($empData);
@@ -101,7 +101,14 @@ class EmployeeController extends Controller
             $fileName = $request->emp_avatar;
         }
 
-        $empData = ['first_name' => $request->fname, 'last_name' => $request->lname, 'email' => $request->email, 'phone' => $request->phone, 'post' => $request->post, 'avatar' => $fileName];
+        $empData = [
+            'first_name' => $request->fname,
+            'last_name' => $request->lname,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'company' => $request->company,
+            'avatar' => $fileName
+        ];
 
         $emp->update($empData);
         return response()->json([
