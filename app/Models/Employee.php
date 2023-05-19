@@ -13,7 +13,7 @@ class Employee extends Model
         'last_name',
         'email',
         'phone',
-        'post',
+        'company',
         'avatar'
     ];
 }
