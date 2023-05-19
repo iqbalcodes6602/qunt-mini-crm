@@ -17,7 +17,7 @@ class CreateEmployeesTable extends Migration {
             $table->string('last_name');
             $table->string('email');
             $table->string('phone');
-            $table->string('post');
+            $table->string('company');
             $table->string('avatar');
             $table->timestamps();
         });
